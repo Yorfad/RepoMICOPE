@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios lógicos - MICOPE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f9f9f9;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        .box {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        input {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        button {
+            margin-top: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+
+    <h1>Ejercicios de Programación</h1>
+
+    <!-- Factorial -->
+    <div class="box">
+        <h2>1. Factorial de un número</h2>
+        <label>Ingrese un número: </label>
+        <input type="number" id="factNum" value="5">
+        <button onclick="calcularFactorial()">Calcular</button>
+        <pre id="resultadoFactorial"></pre>
+    </div>
+
+    <!-- Amortización -->
+    <div class="box">
+        <h2>2. Tabla de Amortización</h2>
+        <label>Monto: </label><input type="number" id="monto" value="10000"><br>
+        <label>Plazo (meses): </label><input type="number" id="plazo" value="6"><br>
+        <label>Tasa de interés mensual (%): </label><input type="number" id="tasa" value="1.5" step="0.1"><br>
+        <button onclick="calcularAmortizacion()">Generar Tabla</button>
+        <pre id="resultadoAmortizacion"></pre>
+    </div>
+
+    <script>
+        // ============ FACTORIAL ============
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            return n * factorial(n - 1);
+        }
+
+        function calcularFactorial() {
+            let n = parseInt(document.getElementById("factNum").value);
+            let resultado = factorial(n);
+            let detalle = `${n}! = `;
+
+            for (let i = n; i >= 1; i--) {
+                detalle += i + (i > 1 ? " × " : " = ");
+            }
+
+            document.getElementById("resultadoFactorial").textContent = detalle + resultado;
+        }
+
+        // ============ AMORTIZACIÓN ============
+        function calcularAmortizacion() {
+            let monto = parseFloat(document.getElementById("monto").value);
+            let plazo = parseInt(document.getElementById("plazo").value);
+            let tasa = parseFloat(document.getElementById("tasa").value) / 100;
+
+            let saldo = monto;
+            let abonoCapital = monto / plazo;
+            let salida = "Periodo | Saldo       | Interés    | Abono      | Pago\n";
+
+            for (let i = 1; i <= plazo; i++) {
+                let interes = saldo * tasa;
+                let pago = abonoCapital + interes;
+
+                salida += `${i}       | Q${saldo.toFixed(2)} | Q${interes.toFixed(2)} | Q${abonoCapital.toFixed(2)} | Q${pago.toFixed(2)}\n`;
+                saldo -= abonoCapital;
+            }
+
+            document.getElementById("resultadoAmortizacion").textContent = salida;
+        }
+    </script>
+
+</body>
+</html>
